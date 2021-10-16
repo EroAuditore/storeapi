@@ -35,9 +35,18 @@ gem "figaro"
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  
 end
 
 group :development do
+end
+
+group :test do
+    gem 'factory_bot_rails'
+    gem 'rspec-rails'
+    gem 'faker'
+    gem 'jsonapi-rspec'
+    #...
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
