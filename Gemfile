@@ -46,6 +46,7 @@ group :test do
     gem 'rspec-rails'
     gem 'faker'
     gem 'jsonapi-rspec'
+   
     #...
 end
 
