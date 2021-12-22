@@ -1,4 +1,7 @@
 
+connection = ActiveRecord::Base.connection()
+
+sql = <<-EOL
 
 INSERT INTO products (description,code,sale_price,purchase_price,bulk_price,bulk, created_at, updated_at) VALUES ('Tostadas charras 300g',756702134719,26.00,21.74,0.00,'0',now(), now());
 INSERT INTO products (description,code,sale_price,purchase_price,bulk_price,bulk, created_at, updated_at) VALUES ('Refresco coca cola 600 ml ',75007614,15.00,11.08,0.00,'0',now(), now());
@@ -963,3 +966,9 @@ INSERT INTO products (description,code,sale_price,purchase_price,bulk_price,bulk
 INSERT INTO products (description,code,sale_price,purchase_price,bulk_price,bulk, created_at, updated_at) VALUES ('MOSTAZA',7501003300676,13.00,0.00,0.00,'0',now(), now());
 INSERT INTO products (description,code,sale_price,purchase_price,bulk_price,bulk, created_at, updated_at) VALUES ('cheetos piedra papel',7500478025879,10.00,0.00,0.00,'0',now(), now());
 INSERT INTO products (description,code,sale_price,purchase_price,bulk_price,bulk, created_at, updated_at) VALUES ('ades mango 1lt',7501005102681,23.00,20.33,0.00,'0',now(), now());
+
+EOL
+
+sql.split(';').each do |s|
+    connection.execute(s.strip) unless s.strip.empty?
+end
