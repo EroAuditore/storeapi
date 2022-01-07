@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  credit: false
+  total: 9.99
+  date: 2022-01-07 11:59:46
+
+two:
+  credit: false
+  total: 9.99
+  date: 2022-01-07 11:59:46

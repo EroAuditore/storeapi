@@ -10,7 +10,7 @@ class Api::V1::ProductsController < ApplicationController
     end
 
     def create
-        @product = Product.new(product_params)
+        @product = Product.new(product_new)
         if @product.save
         render json: {
             data: @product,
@@ -49,6 +49,11 @@ class Api::V1::ProductsController < ApplicationController
 
     private
     def product_params
-        params.permit(:description, :code, :sale_price, :purchase_price, :bulk_price, :bulk, :id)
+        params.require(:product).permit!  
+        #params.permit(:description, :code, :sale_price, :purchase_price, :bulk_price, :bulk, :id)
+    end
+
+    def product_new
+        params.require(:product).permit(:description, :code, :sale_price, :purchase_price, :bulk_price, :bulk)
     end
 end
