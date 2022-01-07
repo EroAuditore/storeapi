@@ -25,7 +25,7 @@ class Api::V1::SellsController < ApplicationController
     end
 
     def sell_new
-        
+            
         params.require(:sell).permit(:total, :date, :credit)
     end
 end
