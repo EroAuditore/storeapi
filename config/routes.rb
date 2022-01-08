@@ -5,8 +5,8 @@ Rails.application.routes.draw do
       get '/products', to: 'products#index'
       post '/product/new', to: 'products#create'
       put '/product/update', to: 'products#update'
-      get '/sell', to: 'sells#index'
-      post '/sell/new', to: 'sells#create'
+      get '/sale', to: 'sales#index'
+      post '/sale/new', to: 'sales#create'
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

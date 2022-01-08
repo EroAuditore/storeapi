@@ -1,20 +1,20 @@
-class Api::V1::SellsController < ApplicationController
+class Api::V1::SalesController < ApplicationController
     def index
-        @sell = Sell.all
+        @sale = Sale.all
         # render json: @products
         render json: {
-            data: @sell,
+            data: @sale,
             status: 200,
-            message: "All Sells"
+            message: "All Sales"
           }, status: :ok
     end
 
     def create
-        @sell = Sell.new(sell_new)
-        if @sell.save
+        @sale = Sale.new(sale_new)
+        if @sale.save
         render json: {
-            data: @sell,
-            message: 'Sell succesfully created.'
+            data: @sale,
+            message: 'sale succesfully created.'
         }, status: :created
         else
         render json: {
@@ -24,8 +24,8 @@ class Api::V1::SellsController < ApplicationController
         end
     end
 
-    def sell_new
+    def sale_new
             
-        params.require(:sell).permit(:total, :date, :credit)
+        params.require(:sale).permit(:total, :date, :credit)
     end
 end
