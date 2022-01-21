@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_07_175946) do
+ActiveRecord::Schema.define(version: 2022_01_22_213808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "clients", force: :cascade do |t|
+    t.string "name"
+    t.boolean "activo", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "credits", force: :cascade do |t|
+    t.boolean "paid"
+    t.bigint "client_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_credits_on_client_id"
+  end
 
   create_table "products", force: :cascade do |t|
     t.string "description"
@@ -26,12 +41,25 @@ ActiveRecord::Schema.define(version: 2022_01_07_175946) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "sells", force: :cascade do |t|
+  create_table "sales", force: :cascade do |t|
     t.boolean "credit", default: false
     t.decimal "total"
     t.datetime "date"
+    t.bigint "credit_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["credit_id"], name: "index_sales_on_credit_id"
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.decimal "price"
+    t.string "description"
+    t.bigint "sale_id"
+    t.bigint "product_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_tickets_on_product_id"
+    t.index ["sale_id"], name: "index_tickets_on_sale_id"
   end
 
   create_table "users", force: :cascade do |t|
