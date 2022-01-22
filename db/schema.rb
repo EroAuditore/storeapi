@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2022_01_22_213808) do
   end
 
   create_table "tickets", force: :cascade do |t|
-    t.decimal "price"
+    t.decimal "total"
     t.string "description"
     t.bigint "sale_id"
     t.bigint "product_id"

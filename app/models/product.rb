@@ -1,4 +1,3 @@
 class Product < ApplicationRecord
-    belongs_to :sales
-    belongs_to :tickets
+    has_many :tickets
 end

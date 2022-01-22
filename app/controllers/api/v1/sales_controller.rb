@@ -1,7 +1,7 @@
 class Api::V1::SalesController < ApplicationController
     def index
         @sale = Sale.all
-        # render json: @products
+       
         render json: {
             data: @sale,
             status: 200,
@@ -10,11 +10,25 @@ class Api::V1::SalesController < ApplicationController
     end
 
     def create
+      
         @sale = Sale.new(sale_new)
+        statuses = []
         if @sale.save
+       
+        params[:ticket].each do |product|
+            product_p =product_params(product)
+            @ticket_new = @sale.tickets.new(product_p)
+            # statuses << ( @ticket_new.save ? "OK" : @ticket_new.errors.full_messages )
+            @ticket_new.save
+          
+            
+           
+        end
+       
+
         render json: {
             data: @sale,
-            message: 'sale succesfully created.'
+            message: 'Sale succesfully created.'
         }, status: :created
         else
         render json: {
@@ -24,8 +38,12 @@ class Api::V1::SalesController < ApplicationController
         end
     end
 
-    def sale_new
-            
+    def sale_new            
         params.require(:sale).permit(:total, :date, :credit)
     end
+     
+    def product_params( product )
+        product.permit(:_id, :total, :description, :credit)
+    end
+    
 end
