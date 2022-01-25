@@ -35,13 +35,24 @@ class Api::V1::SalesController < ApplicationController
         end
     end
 
+    def today_sales
+
+        sales_day = Sale.today_sales
+       
+        render json: {
+            data: sales_day,
+            status: 200,
+            message: "Sales of the day"
+          }, status: :ok
+
+    end
+
+    private
     def sale_new
-               
         params.require(:sale).permit(:total, :date, :credit)
     end
      
-    def product_params( product )
-        #  Parameters.new(product).permit(:_id, :total, :description, :credit)  
+    def product_params( product )        
         product.permit(:_id, :total, :description, :credit)
     end
     
