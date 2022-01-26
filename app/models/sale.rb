@@ -1,14 +1,12 @@
 class Sale < ApplicationRecord
     has_many :tickets
     def self.sales_today
-        @sales = self.where(date: Date.today.at_beginning_of_day..Date.today.at_end_of_day).sum(:total)
+        @sales = self.select("date, total").where(date: Date.today.at_beginning_of_day..Date.today.at_end_of_day).group("date(date)").sum(:total)
         sales_json = []
       
-         @sales.each { |sale| 
-            sales_json << { :date => sale[0], :total => sale[1]} 
-            }
-        rescue
-           
+         @sales.each { |sale| sales_json << { date: sale[0], total: sale[1] }  
+        }
+      
         return sales_json
         
     end
@@ -19,10 +17,9 @@ class Sale < ApplicationRecord
       
          @sales.each { |sale| 
             sales_json << { :date => sale[0], :total => sale[1]} 
-            }
+        }
 
-        rescue
-           
+         byebug  
         return sales_json
         
     end
@@ -35,7 +32,7 @@ class Sale < ApplicationRecord
             sales_json << { :date => sale[0], :total => sale[1]} 
             }
         rescue
-            
+
         return sales_json
     end
 end

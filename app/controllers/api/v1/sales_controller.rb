@@ -38,6 +38,7 @@ class Api::V1::SalesController < ApplicationController
     def sales_today
 
         sales_day = Sale.sales_today
+       
         render json: {
             data: sales_day,
             status: 200,
@@ -47,7 +48,7 @@ class Api::V1::SalesController < ApplicationController
     end
 
     def sales_week
-        byebug
+       
         sales_week = Sale.sales_week
      
         render json: {
@@ -59,9 +60,9 @@ class Api::V1::SalesController < ApplicationController
     end
 
     def sales_month
-        byebug
+        
         sales_month = Sale.sales_month
-        byebug
+        
         render json: {
             data: sales_month,
             status: 200,
