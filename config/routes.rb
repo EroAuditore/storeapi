@@ -7,6 +7,9 @@ Rails.application.routes.draw do
       put '/product/update', to: 'products#update'
       get '/sale', to: 'sales#index'
       post '/sale/new', to: 'sales#create'
+      get '/sales/day', to: 'sales#sales_today'
+      get '/sales/week', to: 'sales#sales_week'
+      get '/sales/month', to: 'sales#sales_month'
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

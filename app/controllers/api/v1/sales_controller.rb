@@ -35,14 +35,37 @@ class Api::V1::SalesController < ApplicationController
         end
     end
 
-    def today_sales
+    def sales_today
 
-        sales_day = Sale.today_sales
-       
+        sales_day = Sale.sales_today
         render json: {
             data: sales_day,
             status: 200,
             message: "Sales of the day"
+          }, status: :ok
+
+    end
+
+    def sales_week
+        byebug
+        sales_week = Sale.sales_week
+     
+        render json: {
+            data: sales_week,
+            status: 200,
+            message: "Sales of the week"
+          }, status: :ok
+
+    end
+
+    def sales_month
+        byebug
+        sales_month = Sale.sales_month
+        byebug
+        render json: {
+            data: sales_month,
+            status: 200,
+            message: "Sales of the month"
           }, status: :ok
 
     end
