@@ -2,9 +2,15 @@ Rails.application.routes.draw do
  
   namespace :api do
     namespace :v1 do
+      #Products
       get '/products', to: 'products#index'
       post '/product/new', to: 'products#create'
       put '/product/update', to: 'products#update'
+      #Clients
+      get '/clients', to: 'clients#index'
+      post '/client/new', to: 'clients#create'
+      put '/client/update', to: 'clients#update'
+      #Sales
       get '/sale', to: 'sales#index'
       post '/sale/new', to: 'sales#create'
       get '/sales/day', to: 'sales#sales_today'

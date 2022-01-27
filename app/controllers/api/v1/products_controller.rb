@@ -5,7 +5,7 @@ class Api::V1::ProductsController < ApplicationController
         render json: {
             data: @products,
             status: 200,
-            message: "logged out successfully"
+            message: "List of products"
           }, status: :ok
     end
 
