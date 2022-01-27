@@ -12,14 +12,14 @@ class Sale < ApplicationRecord
     end
 
     def self.sales_week
-        @sales = self.select("date, total").where(date: Date.today.beginning_of_week.at_beginning_of_day..Date.today.at_end_of_day).group("date(date)").sum(:total)
+        @sales = self.select("date, total").where(date: Date.today.beginning_of_week.at_beginning_of_day..Date.today.at_end_of_day).group("date(date)").order("date(date)").sum(:total)
         sales_json = []
       
          @sales.each { |sale| 
             sales_json << { :date => sale[0], :total => sale[1]} 
         }
 
-         byebug  
+        
         return sales_json
         
     end
@@ -29,9 +29,9 @@ class Sale < ApplicationRecord
         sales_json = []
       
          @sales.each { |sale| 
-            sales_json << { :date => sale[0], :total => sale[1]} 
+            sales_json << { date: sale[0], total: sale[1] }  
             }
-        rescue
+      
 
         return sales_json
     end
