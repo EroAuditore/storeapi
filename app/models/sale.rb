@@ -1,6 +1,7 @@
 class Sale < ApplicationRecord
     has_many :tickets
-    belongs_to :credit, optional: true
+    
+    belongs_to :credits, optional: true
     def self.sales_today
         @sales = self.select("date, total").where(date: Date.today.at_beginning_of_day..Date.today.at_end_of_day).group("date(date)").sum(:total)
         sales_json = []
