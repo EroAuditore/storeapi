@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2022_02_01_181807) do
   end
 
   create_table "credits", force: :cascade do |t|
-    t.boolean "paid"
+    t.boolean "paid", default: false
     t.bigint "client_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

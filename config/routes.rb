@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       get '/sales/month', to: 'sales#sales_month'
       #credit
       get '/credit/client/:id', to: 'credits#credit_client'
-      post '/credit/add', to: 'credits#add_to_credit'
+      post '/credit/client/add', to: 'credits#add_to_credit'
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

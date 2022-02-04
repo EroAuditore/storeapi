@@ -1,5 +1,5 @@
 class Api::V1::CreditsController < ApplicationController
-
+    include SalesHelper
     def index
         @credits = Credit.all
         
@@ -22,10 +22,11 @@ class Api::V1::CreditsController < ApplicationController
                     message: 'Client credit.'
                 }, status: :ok
             elsif (credit.pluck(:paid)[0] == true)
+                #last credit is paid 
                 render json: {
                     data: [{client_id: params[:id], paid:false, total:0}],
                     message: 'Credit empty paid'
-                }, status: :not_found
+                }, status: :ok
 
             end
         else
@@ -33,35 +34,69 @@ class Api::V1::CreditsController < ApplicationController
         render json: {
             data: [{client_id: params[:id], paid:false, total:0}],
             message: 'Credit empty'
-        }, status: :not_found
+        }, status: :ok
         end
     end
     
 
 
     def add_to_credit
-        byebug
-        @credit = Credit.client_credit(params[:id])
-        byebug
-        unless @credit.empty?
-            #if it has already a credit
-            render json: {
-               data:@credit,
-                message: 'Client credit.'
-            }, status: :ok
-            else
-            render json: {
-                data: {client_id: params[:id], paid:false, total:0},
-                message: 'Credit empty'
-            }, status: :not_found
+      
+        credit = Credit.client_credit(params[:client_id])
+       
+        unless (credit.empty?)
+            
+           #client already has credit
+            if ( (!credit.pluck(:paid)[0].nil?)  && (credit.pluck(:paid)[0] == false))
+            
+                save_sale(sale_new, params[:ticket], credit.ids[0])
+                render json: {
+                data:credit,
+                    message: 'Added to client credit.'
+                }, status: :ok
+            elsif (credit.pluck(:paid)[0] == true)
+                #last credit is paid creates a new credit
+            
+                newCredit = Credit.new(credit_params)
+                
+                if newCredit.save
+                    
+                    save_sale(sale_new, params[:ticket], newCredit.id)
+                    
+                    render json: {
+                        data: [newCredit],
+                        message: 'New credit created'
+                    }, status: :ok
+                end
+
             end
-        
+        else
+        #Create new credit when client is new
+       
+        newCredit = Credit.new(credit_params)
+      
+            if newCredit.save
+                
+                save_sale(sale_new, params[:ticket], newCredit.id)
+                render json: {
+                    data: [newCredit],
+                    message: 'New credit created'
+                }, status: :ok
+            end
+            
+        end
     end
 
 
     private
 
     def credit_params
-        params.require(:credit).permit(:name)
+        params.permit(:client_id, :total)
     end
+    def sale_new
+       
+        params.require(:sale).permit(:total, :date, :credit)
+    end
+     
+   
 end

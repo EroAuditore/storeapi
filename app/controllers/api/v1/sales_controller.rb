@@ -1,4 +1,5 @@
 class Api::V1::SalesController < ApplicationController
+    include SalesHelper
     def index
         @sale = Sale.all
        
@@ -10,7 +11,8 @@ class Api::V1::SalesController < ApplicationController
     end
 
     def create
-       
+       byebug
+        # save_sale(params[:ticket])
         @sale = Sale.new(sale_new)
         statuses = []
         if @sale.save
