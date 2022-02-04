@@ -42,19 +42,21 @@ class Api::V1::CreditsController < ApplicationController
 
     def add_to_credit
       
-        credit = Credit.client_credit(params[:client_id])
+        credit = Credit.client_credit(params[:client_id]).first
        
-        unless (credit.empty?)
+        unless (credit.nil?)
             
            #client already has credit
-            if ( (!credit.pluck(:paid)[0].nil?)  && (credit.pluck(:paid)[0] == false))
+            if ( (!credit.paid.nil?)  && (credit.paid == false))
             
-                save_sale(sale_new, params[:ticket], credit.ids[0])
+                save_sale(sale_new, params[:ticket], credit.id)
+                credit.total = params[:total]
+                credit.save
                 render json: {
                 data:credit,
                     message: 'Added to client credit.'
                 }, status: :ok
-            elsif (credit.pluck(:paid)[0] == true)
+            elsif (credit.paid == true)
                 #last credit is paid creates a new credit
             
                 newCredit = Credit.new(credit_params)
