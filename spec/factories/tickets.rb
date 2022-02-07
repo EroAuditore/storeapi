@@ -2,6 +2,7 @@ FactoryBot.define do
     factory :ticket do
       description { "Ticket description" }
       sale
+      association(:product)
     end
   
     # factory :sale do

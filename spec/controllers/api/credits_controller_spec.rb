@@ -59,6 +59,24 @@ describe 'Client API', type: :request do
             expect(credit_test).to include('total')
             expect(credit_test["total"]).to eq 0
         end
+
+
+        it 'returns the ticktes from user' do
+            
+            client_credit = FactoryBot.create(:client)
+            
+            credit_test = FactoryBot.create(:credit, client_id: client_credit.id)
+           
+            sale_test = FactoryBot.create(:sale, credit_id: client_credit.id)
+           
+            tickets_test = FactoryBot.create_list(:ticket, 5, sale: sale_test)
+           
+            get "/api/v1/credit/tickets/#{client_credit.id}"
+            json = JSON.parse(response.body)
+            credit_test = json['data'][0]
+            byebug
+            expect(json['data']).to have_attributes(count: be_positive)
+        end
     end
 
     context 'When Add sales to credit' do

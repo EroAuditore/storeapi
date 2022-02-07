@@ -1,5 +1,6 @@
 class Api::V1::CreditsController < ApplicationController
-    include SalesHelper
+   
+
     def index
         @credits = Credit.all
         
@@ -42,7 +43,7 @@ class Api::V1::CreditsController < ApplicationController
 
     def add_to_credit
       
-        credit = Credit.client_credit(params[:client_id]).first
+        credit = Credit.client_credit(params[:client_id]).last
        
         unless (credit.nil?)
             
@@ -89,6 +90,35 @@ class Api::V1::CreditsController < ApplicationController
         end
     end
 
+    def credit_detail
+       
+        last_credit = Credit.client_credit_unpaid(params[:client_id]).last
+      
+        if !last_credit.nil?
+            
+            t =Credit.includes(:tickets).where("credits.id = ?", last_credit.id)
+           
+            byebug
+            #c[0].ticket 
+            render json: {
+                tickets: t[0].tickets,
+                credit: last_credit,
+                message: 'Tickets'
+            }, status: :ok
+        else
+          
+            render json: {
+                tickets: [],
+                credit: last_credit,
+                message: 'Credito vacio'
+            }, status: :ok
+
+        end
+        
+        
+    end
+
+
 
     private
 
@@ -98,6 +128,28 @@ class Api::V1::CreditsController < ApplicationController
     def sale_new
        
         params.require(:sale).permit(:total, :date, :credit)
+    end
+
+    def save_sale(sale_new, tickets, credit_id= nil)
+        
+        @sale = Sale.new(sale_new)
+        @sale.credit_id = credit_id
+        statuses = []
+        if @sale.save
+         
+            tickets.each do |product|
+                product_p =product_params(product)
+                @ticket_new = @sale.tickets.new(product_p)
+                statuses << ( @ticket_new.save ? "OK" : @ticket_new.errors.full_messages )
+            end
+        end
+    end
+
+   
+     
+    def product_params( product )
+       
+        product.permit(:_id, :total, :description)
     end
      
    
