@@ -98,8 +98,7 @@ class Api::V1::CreditsController < ApplicationController
             
             t =Credit.includes(:tickets).where("credits.id = ?", last_credit.id)
            
-            byebug
-            #c[0].ticket 
+             
             render json: {
                 tickets: t[0].tickets,
                 credit: last_credit,
@@ -109,7 +108,7 @@ class Api::V1::CreditsController < ApplicationController
           
             render json: {
                 tickets: [],
-                credit: last_credit,
+                credit: { total: 0},
                 message: 'Credito vacio'
             }, status: :ok
 
