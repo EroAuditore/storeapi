@@ -48,7 +48,7 @@ INSERT INTO products (description,code,sale_price,purchase_price,bulk,created_at
 INSERT INTO products (description,code,sale_price,purchase_price,bulk,created_at,updated_at) VALUES ('Doritos xtra flamin hot 62g',7501011130272,14.00,14.00,'0','2022-02-09 13:59:09','2022-02-09 13:59:09');
 INSERT INTO products (description,code,sale_price,purchase_price,bulk,created_at,updated_at) VALUES ('Doritos diablo 62g ',7501011123595,14.00,14.00,'0','2022-02-09 13:59:09','2022-02-09 13:59:09');
 INSERT INTO products (description,code,sale_price,purchase_price,bulk,created_at,updated_at) VALUES ('Marias 170gr gamesa',7501000658923,13.00,13.00,'0','2022-02-09 13:59:09','2022-02-09 13:59:09');
-INSERT INTO products (description,code,sale_price,purchase_price,bulk,created_at,updated_at) VALUES ('Marias gamesa azucaradas 150g ',7501000658329,14.00,14.00,'0','2022-02-09 13:59:09','2022-02-09 13:59:09');
+INSERT INTO products (description,code,sale_price,purchase_price,bulk,created_at,updated_at) VALUES ('Marias gamesa azucaradas 150gg ',7501000658329,14.00,14.00,'0','2022-02-09 13:59:09','2022-02-09 13:59:09');
 INSERT INTO products (description,code,sale_price,purchase_price,bulk,created_at,updated_at) VALUES ('Cheetos colmillos 29g',7501011165717,12.00,12.00,'0','2022-02-09 13:59:09','2022-02-09 13:59:09');
 INSERT INTO products (description,code,sale_price,purchase_price,bulk,created_at,updated_at) VALUES ('Cheetos Colmillos 27g',7501011165717,12.00,12.00,'0','2022-02-09 13:59:09','2022-02-09 13:59:09');
 INSERT INTO products (description,code,sale_price,purchase_price,bulk,created_at,updated_at) VALUES ('Cheetos pofts 42g',7500478014606,12.00,12.00,'0','2022-02-09 13:59:09','2022-02-09 13:59:09');
