@@ -14,26 +14,32 @@ class Api::V1::CreditsController < ApplicationController
 
     def credit_client
        
-        credit = Credit.client_credit(params[:id])
+        credit = Credit.joins(:client).client_credit(params[:id]).last
         
-        unless (credit.empty?)
-            if ( (!credit.pluck(:paid)[0].nil?)  && (credit.pluck(:paid)[0] == false))
+        unless (credit.nil?)
+          
+            if ( (!credit.paid.nil?)  && (credit.paid == false))
                 render json: {
-                data:credit,
+                    data:credit,
+                    client: credit.client.name,
                     message: 'Client credit.'
                 }, status: :ok
-            elsif (credit.pluck(:paid)[0] == true)
+            elsif (credit.paid == true)
                 #last credit is paid 
                 render json: {
-                    data: [{client_id: params[:id], paid:false, total:0}],
+                    data: {client_id: params[:id], paid:false, total:0},
+                    client: credit.client.name,
                     message: 'Credit empty paid'
                 }, status: :ok
 
             end
         else
-            
+           
+        c = Client.find(params[:id])
+      
         render json: {
-            data: [{client_id: params[:id], paid:false, total:0}],
+            data: {client_id: params[:id], paid:false, total:0},
+            client: c.name,
             message: 'Credit empty'
         }, status: :ok
         end

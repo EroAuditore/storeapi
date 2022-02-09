@@ -10,6 +10,9 @@ describe 'Client API', type: :request do
         let!(:credit_paid) do
             FactoryBot.create(:paid_credit)
         end
+        let!(:cliente_test2) do
+            FactoryBot.create(:client, name: "cliente test 2")
+        end
        
         it 'Returns the last credit by client' do
             
@@ -18,24 +21,27 @@ describe 'Client API', type: :request do
             expect(json['data']).to have_attributes(count: be_positive)
         end
         it 'Returns the last unpaid credit' do
+         
             get "/api/v1/credit/client/#{credit.client_id}"
             json = JSON.parse(response.body)
-            credit_test = json['data'][0]
+          
+            credit_test = json['data']
             expect(credit_test).to include('paid')
             expect(credit_test["paid"]).to be false
         end
         it 'Returns the Empty credit when is new client' do
-          
-            get "/api/v1/credit/client/16"
+            
+            
+            get "/api/v1/credit/client/#{cliente_test2.id}"
             json = JSON.parse(response.body)
-           
-            credit_test = json['data'][0]
+          
+            credit_test = json['data']
             
             expect(credit_test).to include('paid')
             expect(credit_test["paid"]).to be false
 
             expect(credit_test).to include('client_id')
-            expect(credit_test["client_id"].to_i).to eq 16
+            expect(credit_test["client_id"].to_i).to eq cliente_test2.id
 
             expect(credit_test).to include('total')
             expect(credit_test["total"]).to eq 0
@@ -46,7 +52,7 @@ describe 'Client API', type: :request do
             get "/api/v1/credit/client/#{credit_paid.client_id}"
             
             json = JSON.parse(response.body)
-            credit_test = json['data'][0]
+            credit_test = json['data']
             
             expect(json['data']).to have_attributes(count: be_positive)
 
