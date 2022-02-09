@@ -38,8 +38,6 @@ class Api::V1::CreditsController < ApplicationController
         }, status: :ok
         end
     end
-    
-
 
     def add_to_credit
       
@@ -118,6 +116,30 @@ class Api::V1::CreditsController < ApplicationController
     end
 
     def close_credit
+        credit = Credit.find(params[:id])
+        if !credit.nil?
+            credit.paid = true
+             if credit.save
+                render json: {
+                    credit: credit,
+                    message: 'Credit closed succesfully.'
+                }, status: :ok
+                else
+                    render json: {
+                        credit: {},
+                        message: 'Credit not closed.'
+                    }, status: :ok
+             end
+           
+        else
+          
+            render json: {
+                credit: {},
+                message: 'Credit not closed.'
+            }, status: :ok
+
+        end
+
         
     end
     

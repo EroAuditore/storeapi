@@ -69,13 +69,15 @@ describe 'Client API', type: :request do
            
             sale_test = FactoryBot.create(:sale, credit_id: client_credit.id)
            
+            ticket = FactoryBot.create(:ticket, sale_id: sale_test.id)
             tickets_test = FactoryBot.create_list(:ticket, 5, sale: sale_test)
            
             get "/api/v1/credit/tickets/#{client_credit.id}"
             json = JSON.parse(response.body)
-            credit_test = json['data'][0]
-            byebug
-            expect(json['data']).to have_attributes(count: be_positive)
+            
+            expect(json['message']).to eq 'Tickets'
+            
+            # expect(json['data']).to have_attributes(count: be_positive)
         end
     end
 
@@ -132,5 +134,18 @@ describe 'Client API', type: :request do
         end
     end
 
+    context 'When close credit' do
+        let!(:client_credit) do
+            FactoryBot.create(:credit)
+        end
+        it "update credit as paid true" do
+            put "/api/v1/credit/close", params: { id: client_credit.id }
+            json = JSON.parse(response.body)
+           
+            expect(json['credit']).to have_attributes(count: be_positive)
+            expect(json['message']).to eq 'Credit closed succesfully.'
+        end
+        
+    end
 
 end
