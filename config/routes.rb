@@ -20,6 +20,9 @@ Rails.application.routes.draw do
       get '/credit/client/:id', to: 'credits#credit_client'
       post '/credit/client/add', to: 'credits#add_to_credit'
       get '/credit/tickets/:client_id', to: 'credits#credit_detail'
+      put '/credit/close', to: 'credits#close_credit'
+
+      
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
