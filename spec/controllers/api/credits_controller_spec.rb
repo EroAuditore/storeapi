@@ -47,7 +47,6 @@ describe 'Client API', type: :request do
             expect(credit_test["total"]).to eq 0
         end
         it 'Returns the Empty credit if the last credit is paid' do
-            
           
             get "/api/v1/credit/client/#{credit_paid.client_id}"
             
